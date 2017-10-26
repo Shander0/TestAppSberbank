@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TestAppSberbank</string>
+
+    <string name="currencies_load">Загрузка курсов валют</string>
+    <string name="load_start">Начало загрузки данных</string>
+    <string name="record_to_database">Запись в базу данных</string>
+    <string name="completed_sync">Выполнено</string>
+    <string name="start_synchronization">Начало синхронизации</string>
+</resources>
