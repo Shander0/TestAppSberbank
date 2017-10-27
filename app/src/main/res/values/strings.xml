@@ -6,4 +6,9 @@
     <string name="record_to_database">Запись в базу данных</string>
     <string name="completed_sync">Выполнено</string>
     <string name="start_synchronization">Начало синхронизации</string>
+    <string name="no_internet">Отсутствует соединение с интернетом. Перейдите в настройки для включения.</string>
+    <string name="settings">Настройки</string>
+    <string name="choose_first">Выберите исходную валюту</string>
+    <string name="choose_second">Выберите конечную валюту</string>
+    <string name="enter_value">Введите сумму в первой валюте</string>
 </resources>

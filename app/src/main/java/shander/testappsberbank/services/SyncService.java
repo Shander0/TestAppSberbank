@@ -13,6 +13,7 @@ import android.os.Message;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import shander.testappsberbank.App;
 import shander.testappsberbank.R;
@@ -47,6 +48,7 @@ public class SyncService extends Service {
         super.onCreate();
         log = new Log();
         handler = new H();
+        handler.setService(this);
         state = StateService.NULL_PROCESS;
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         logger = new AbstractProcess.Logger() {
@@ -96,7 +98,6 @@ public class SyncService extends Service {
             @Override
             public void run() {
                 state = StateService.PROGRESS;
-
                 DownloadAndParseCurrencies parseCurrencies = new DownloadAndParseCurrencies(logger, SyncService.this);
                 parseCurrencies.start();
 

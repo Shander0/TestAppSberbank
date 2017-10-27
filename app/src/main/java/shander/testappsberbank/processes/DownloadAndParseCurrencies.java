@@ -3,6 +3,7 @@ package shander.testappsberbank.processes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.simpleframework.xml.core.Persister;
 
@@ -15,11 +16,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashSet;
-import java.util.Set;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import shander.testappsberbank.App;
 import shander.testappsberbank.R;
@@ -41,18 +43,16 @@ public class DownloadAndParseCurrencies extends AbstractProcess implements ICont
     @Override
     public void start() {
         postProgressName(context.getString(R.string.currencies_load));
-
         OutputStream output = null;
         InputStream input = null;
 
         log(context.getString(R.string.load_start));
 
         try {
-            URL url = new URL(Settings.BASE_URL + Settings.DAILY + Settings.SRCIPTS);
-            URLConnection connection = url.openConnection();
-            connection.connect();
+            URL url = new URL("http", "www.cbr.ru", "scripts/XML_daily.asp");
+            HttpURLConnection connection =(HttpURLConnection)url.openConnection();
+            connection.setConnectTimeout(5000);
 
-            long lenghtOfFile = connection.getContentLength();
             long totalCount = 0;
             input = new BufferedInputStream(connection.getInputStream());
 
@@ -64,7 +64,7 @@ public class DownloadAndParseCurrencies extends AbstractProcess implements ICont
             while ((count = input.read(data)) != -1) {
                 totalCount += count;
                 output.write(data, 0, count);
-                postProgress(calculateProgress(totalCount, lenghtOfFile, 0, 50));
+                postProgress(calculateProgress(totalCount, 99999999, 0, 50));
             }
 
             output.flush();
@@ -121,7 +121,7 @@ public class DownloadAndParseCurrencies extends AbstractProcess implements ICont
 
                 for (Currency currency : list.getCurrencies()) {
 
-                    ContentValues cv = DBHelper.CURRENCY_CONVERTER.convert(currency);
+                    ContentValues cv = DBHelper.CURR_TO_CONTENT_CONVERTER.convert(currency);
                     db.insert(Tables.CURRENCIES, null, cv);
                 }
 

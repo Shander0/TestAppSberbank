@@ -47,4 +47,28 @@ public class Currency {
     public Float getValue() {
         return value;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumCode(int numCode) {
+        this.numCode = numCode;
+    }
+
+    public void setCharCode(String charCode) {
+        this.charCode = charCode;
+    }
+
+    public void setNominal(Float nominal) {
+        this.nominal = nominal;
+    }
+
+    public void setValue(Float value) {
+        this.value = value;
+    }
 }

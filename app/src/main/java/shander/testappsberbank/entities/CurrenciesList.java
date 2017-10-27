@@ -36,4 +36,7 @@ public class CurrenciesList implements Serializable {
         return currencies;
     }
 
+    public void setCurrencies(List<Currency> currencies) {
+        this.currencies = currencies;
+    }
 }

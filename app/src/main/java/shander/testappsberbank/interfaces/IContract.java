@@ -3,9 +3,9 @@ package shander.testappsberbank.interfaces;
 public interface IContract {
 
     interface Settings {
-        String BASE_URL = "http://www.cbr.ru/";
+        String BASE_URL = "www.cbr.ru/scripts/XML_daily.asp";
         String SRCIPTS = "scripts/";
-        String DAILY = "XML_daily.asp";
+        String DAILY = "XML_daily.asp/";
     }
 
     interface Database {

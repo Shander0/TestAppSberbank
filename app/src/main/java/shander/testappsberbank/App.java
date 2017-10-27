@@ -2,8 +2,10 @@ package shander.testappsberbank;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 
 import shander.testappsberbank.db.DBHelper;
+import shander.testappsberbank.services.SyncService;
 
 public class App extends Application {
 
@@ -17,7 +19,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         helper = new DBHelper(this);
-
+        Intent startService = new Intent(this, SyncService.class);
+        startService(startService);
     }
 
     public DBHelper getBaseHelper() {
