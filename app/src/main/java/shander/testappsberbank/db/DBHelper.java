@@ -14,6 +14,7 @@ import shander.testappsberbank.entities.CurrenciesList;
 import shander.testappsberbank.entities.Currency;
 import shander.testappsberbank.interfaces.IContract;
 import shander.testappsberbank.utils.IConverter;
+import shander.testappsberbank.utils.StringToDoubleFormatter;
 
 public class DBHelper extends SQLiteOpenHelper implements IContract {
 
@@ -27,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper implements IContract {
                 + Tables.CURRENCIES + "(" + SingleCurrency.ID + " integer primary key autoincrement not null, "
                 + SingleCurrency.VALUTE_ID + " text, " + SingleCurrency.NUM_CODE + " integer, "
                 + SingleCurrency.CHAR_CODE + " text, " + SingleCurrency.NAME + " text, "
-                + SingleCurrency.NOMINAL + " float, " + SingleCurrency.VALUE + " float" + ");";
+                + SingleCurrency.NOMINAL + " double, " + SingleCurrency.VALUE + " double" + ");";
 
         sqLiteDatabase.execSQL(CREATE_CURRENCIES_TABLE);
     }
@@ -35,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper implements IContract {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         if (i != i1) {
-            sqLiteDatabase.execSQL("DROP TABLE IF IT EXISTS " + Tables.CURRENCIES);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Tables.CURRENCIES);
 
             onCreate(sqLiteDatabase);
         }
@@ -65,13 +66,18 @@ public class DBHelper extends SQLiteOpenHelper implements IContract {
         public ContentValues convert(Currency src) {
 
             ContentValues cv = new ContentValues();
+            StringToDoubleFormatter formatter = new StringToDoubleFormatter();
 
             cv.put(SingleCurrency.VALUTE_ID, src.getId());
             cv.put(SingleCurrency.NUM_CODE, src.getNumCode());
             cv.put(SingleCurrency.CHAR_CODE, src.getCharCode());
             cv.put(SingleCurrency.NAME, src.getName());
-            cv.put(SingleCurrency.NOMINAL, src.getNominal());
-            cv.put(SingleCurrency.VALUE, src.getValue());
+            try {
+                cv.put(SingleCurrency.NOMINAL, formatter.read(src.getNominal()));
+                cv.put(SingleCurrency.VALUE, formatter.read(src.getValue()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return cv;
         }
     };
@@ -87,9 +93,9 @@ public class DBHelper extends SQLiteOpenHelper implements IContract {
                 c.setId(src.getString(src.getColumnIndex(SingleCurrency.VALUTE_ID)));
                 c.setName(src.getString(src.getColumnIndex(SingleCurrency.NAME)));
                 c.setCharCode(src.getString(src.getColumnIndex(SingleCurrency.CHAR_CODE)));
-                c.setNominal(src.getFloat(src.getColumnIndex(SingleCurrency.NOMINAL)));
+                c.setNominal(src.getString(src.getColumnIndex(SingleCurrency.NOMINAL)));
                 c.setNumCode(src.getInt(src.getColumnIndex(SingleCurrency.NUM_CODE)));
-                c.setValue(src.getFloat(src.getColumnIndex(SingleCurrency.VALUE)));
+                c.setValue(src.getString(src.getColumnIndex(SingleCurrency.VALUE)));
 
                 map.put(c.getNumCode(), c);
             }

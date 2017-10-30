@@ -19,10 +19,10 @@ public class Currency {
     private String charCode;
 
     @Element(name = "Nominal")
-    private Float nominal;
+    private String nominal;
 
     @Element(name = "Value")
-    private Float value;
+    private String value;
 
     public String getId() {
         return id;
@@ -40,11 +40,11 @@ public class Currency {
         return charCode;
     }
 
-    public Float getNominal() {
+    public String getNominal() {
         return nominal;
     }
 
-    public Float getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -64,11 +64,11 @@ public class Currency {
         this.charCode = charCode;
     }
 
-    public void setNominal(Float nominal) {
+    public void setNominal(String nominal) {
         this.nominal = nominal;
     }
 
-    public void setValue(Float value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

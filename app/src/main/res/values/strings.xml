@@ -11,4 +11,5 @@
     <string name="choose_first">Выберите исходную валюту</string>
     <string name="choose_second">Выберите конечную валюту</string>
     <string name="enter_value">Введите сумму в первой валюте</string>
+    <string name="convert">Конвертировать</string>
 </resources>
