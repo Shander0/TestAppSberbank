@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 second = currencyMap.get(Integer.parseInt(view.getContentDescription().toString()));
                 convert();
+
             }
 
             @Override
